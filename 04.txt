@@ -1,0 +1,77 @@
+mv metastore_db metastore_db.tmp
+schematool -initSchema -dbType derby
+___________________________________________
+
+1. create table employee (eid int,name string,salary float, deptno int) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+
+2. ALTER TABLE employee RENAME TO emp;
+
+3. ALTER TABLE emp CHANGE name ename String
+
+4. load data local inpath '/home/emp.txt' into table emp;
+
+=====================================
+	emp.txt
+
+1	avinash	100.0	100
+2	jaydip	200.0	101
+3	shank	300.0	100
+4	vishnu	400.0	101
+5	nikita	500.0	100
+6	shamal	600.0	101
+7	saurabh	1001.0	100
+8	ashish	2001.0	101
+9	ketki	3001.0	100
+10	harsh	4001.0	101
+11	prakash	5001.0	100
+12	shivani	6001.0	101
+
+=====================================
+
+5. SELECT * from emp where salary>500;
+
+6. SELECT deptno,COUNT(*) FROM emp GROUP BY deptno;
+
+7. SELECT deptno,COUNT(*) count1 FROM emp GROUP BY deptno HAVING COUNT(deptno) > 2;
+
+8. select * from emp limit 2;
+
+_________________________________________________
+
+9. create 'customer', 'addr', 'order'
+
+10. 
+
+hbase(main):004:0> put 'customer', 'smith', 'addr:city', 'Pune'
+
+hbase(main):005:0> put 'customer', 'smith', 'addr:state', 'MH'
+
+hbase(main):006:0> put 'customer', 'smith', 'order:date', '01/02/2015'
+
+hbase(main):007:0> put 'customer', 'smith', 'order:number', '12345'
+
+
+hbase(main):008:0> put 'customer', 'john', 'addr:city', 'Banglore'
+
+hbase(main):009:0> put 'customer', 'john', 'addr:state', 'MH'
+
+hbase(main):010:0> put 'customer', 'john', 'order:date', '02/02/2015'
+
+hbase(main):011:0> put 'customer', 'john', 'order:number', '56565'
+
+
+11. describe 'customer'
+
+12. get 'customer', 'smith'
+
+13. get 'customer', 'smith', {COLUMNS=>['addr']}
+
+14. get 'customer', 'smith', {COLUMNS=>['addr']}
+
+15. scan 'customer'
+
+16. scan 'customer', {COLUMNS=>['addr']}
+
+17. count 'customer'
+
+18. deleteall 'customer', 'jsmith' 

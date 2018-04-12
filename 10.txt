@@ -1,0 +1,29 @@
+import pandas as pd
+from pandas import DataFrame
+import matplotlib.pyplot as plt
+pf=pd.read_csv("E:\MY SLV6\DATASETS\DATASETS\mtcars.csv")
+pf.plot.bar()
+pf.plot.bar(x='hp',y='wt',align='center',alpha=0.5)
+plt.show()
+#%%
+pf.plot.scatter(x='hp',y='wt')
+plt.title("scatter plot of mtcars")
+#%%
+plt.title("Pie Chart")
+pf.plot.pie(x='hp',y='wt')
+#%%
+plt.title("Line chart")
+pf.plot(x='hp',y='drat',linestyle='solid')
+pf.plot(x='hp',y='drat',linestyle='dashed')
+pf.plot(x='wt',y='qsec',linestyle='dashdot')
+pf.plot(x='wt',y='qsec',linestyle='dotted')
+plt.show()
+#%%
+pf.hist('wt')
+plt.title("Histogram")
+plt.show()
+#%%
+pf.boxplot('disp')
+pf.boxplot()
+pf.title("Box Plot")
+plt.show()

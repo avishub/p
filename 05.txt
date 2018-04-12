@@ -1,0 +1,110 @@
+import pandas as pd;
+
+data = pd.read_csv("E:\MY SLV6\DATASETS\DATASETS\dataset_Facebook.csv");
+
+# 1. CREATING DATA SUBSET
+#%%
+print("Creating Data Subset")
+frm1=pd.DataFrame(data,columns=['pagetotallikes','like','share','totalinteractions'])
+frm1
+#%%
+print("Print only share and like values")
+t=frm1[['share','like']]
+t
+#%%
+print("Print records whose share > 140")
+frm2=frm1 [frm1.share>140]
+frm2 
+#%%
+print("Print record whose share = 140")
+fm=frm1[frm1.share==49]
+fm
+#%%
+frm3=frm1.loc [frm1.like>100,['share']]
+frm3
+#%%
+print("Print only share and paid values")
+t3=frm1.loc [frm1.like>100, ['share','paid']]
+t3
+#%%
+#AND
+print("Print records whose like > 100 and share>100")
+fm=frm1.loc[(frm1 ['like']>100) &(frm1['share']>100)]
+fm
+#%%
+#or
+print("Print records whose like > 100 or share>100")
+fm=frm1.loc[(frm1['like']>150) | (frm1['totalinteractions']>585)]
+fm
+#%%
+
+#______________________________________________________________________
+# 2. MERGE DATA   
+# one to one join
+data1 = data.loc[1:10, ['like', 'share']]
+data2 = data.loc[1:10, ['like', 'comment']]
+
+print(pd.merge(data1, data2, on="like"))
+#%%
+#many to one join
+#Many-to-one joins are joins in which one of the two key columns contains duplicate entries. 
+#For the many-to-one case, the resulting DataFrame will preserve those duplicate entries as appropriate
+data4 = data.loc[1:10, ['postmonth', 'postweekday']]
+data5 = data.loc[1:10, ['postmonth', 'posthour']]
+print(pd.merge(data4, data5))
+#%%
+#Many to Many join
+#Many-to-many joins are a bit confusing conceptually, but are nevertheless well defined.
+#If the key column in both the left and right array contains duplicates, then the result is a many-to-many 
+#merge.
+
+#%%
+#__________________________________________________________________________
+# 3. SORT DATA
+#Sorting in ascending order
+frm1=data.loc[1:10, ['pagetotallikes','like', 'share']].sort_values(by='like')
+frm1
+#%%
+#Sorting in ascending order
+frm2=data.loc[1:10, ['pagetotallikes','like', 'share']].sort_values(by='like', ascending=False)
+frm2
+#%%
+
+#________________________________________________________________________
+# 4. TRANSPOSING DATA
+frm3=data.loc[1:10, ['pagetotallikes','like', 'share']].T
+frm3
+frm=frm3.T
+frm
+
+#%%
+#________________________________________
+# 5. Melting Data to long format
+#The melt method can be used to change from wide to long format
+# gives variable,value tuple for each record
+t1=frm1.melt()
+t1
+#%%
+t2=data.loc[1:15].melt(id_vars=['type'],value_vars=['posthour'])
+t2
+#%%
+t3=data.loc[1:15].melt(id_vars=['type','category'],value_vars=['like','share'])
+t3
+#%%
+t4=data.loc[1:15].melt(id_vars=['type','category'],value_vars=['like','share'],var_name='output variable',value_name='Op value',col_level=0)
+t4
+#%%
+
+#_______________________________________
+# 6. CASTING
+#The pivot method can be used to change from the long to wide format
+mt=pd.read_csv("E:\MY SLV6\DATASETS\DATASETS\mtcars.csv") 
+mt
+#%%
+a = mt.drop_duplicates(subset='model')
+a
+#%%
+a1=a.pivot(index='model',columns='mpg',values='qsec')
+a1
+#%%
+t4
