@@ -1,0 +1,40 @@
+import pandas as pd
+from pandas import DataFrame
+import matplotlib.pyplot as plt
+pf=pd.read_csv("E:\MY SLV6\DATASETS\DATASETS\dataset_Facebook.csv")
+
+data = pf.loc[1:500];
+pf1 = pf.loc[1:500,["postmonth","like"]]
+a = pf1.groupby("postmonth").sum()
+a
+
+#%%
+b=a.plot.bar(x=None,y='like',align='center',alpha=1)
+#%%
+pf.plot.scatter(x='like',y='share')
+plt.title("scatter plot of total share wrt to like")
+#%%
+a.plot.pie(x="Index",y='like',autopct='%1.1f%%')
+plt.title("Pie Chart for total likes in a months")
+#%%
+a.plot(x=None,y='like')
+a.plot(x=None,y='like',linestyle='dashed')
+a.plot(x=None,y='like',linestyle='dotted')
+a.plot(x=None,y='like',linestyle='dashdot')
+plt.show()
+#%%
+pf.hist('type')
+plt.title("Histogram")
+plt.show()
+#%%
+pf.boxplot('disp')
+pf.boxplot()
+pf.title("Box Plot")
+plt.show()
+
+#%%
+s1 = data.groupby('postmonth')['like'].sum()
+s2 = data.groupby(['postmonth','type'])[['like']].sum()
+s2 = data.groupby(['postmonth','type'], as_index=False)[['like']].sum()
+
+
